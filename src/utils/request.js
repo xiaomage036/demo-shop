@@ -1,7 +1,4 @@
 import axios from 'axios'
-import { Loading } from 'element-ui'
-
-let loadingInstance = null
 
 const request = axios.create({
   // baseURL: 'https://www.escook.cn'
@@ -9,12 +6,11 @@ const request = axios.create({
 })
 
 request.interceptors.request.use((config) => {
-  loadingInstance = Loading.service({ fullscreen: true })
+  config.headers.Authorization = sessionStorage.getItem('token')
   return config
 })
 
 request.interceptors.response.use((response) => {
-  loadingInstance.close()
   return response
 })
 
